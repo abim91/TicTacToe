@@ -6,8 +6,8 @@ body{
     font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: grid;
     grid-template: 1fr 5fr/ 1fr;
-    border-style: solid;
-    border-color: red;
+ /*   border-style: solid;
+    border-color: red;*/
     min-width: 700px;
 
     
@@ -21,12 +21,12 @@ body{
     text-align: center;
     color: rgb(34, 37, 37);
     
-    border: solid;
-    border-color: black;
+  /*  border: solid;
+    border-color: black;*/
 }
 .main-content{
-    border-style: solid;
-    border-color: blue;
+ /*   border-style: solid;
+    border-color: blue;*/
     display: flex;
     justify-content: center;
     
@@ -49,10 +49,10 @@ body{
     
 }
 .playerTracker{
-    border-style: solid;
+  /*  border-style: solid;
     border-color: orange;
     
-    text-align: center;
+    text-align: center;*/
 
 }
 .gameBoard{
@@ -82,4 +82,14 @@ ul li{
 }
 #slot-two, #slot-five, #slot-eight{
     border-left-width: 0;
+}
+
+.slot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:0px;
+    font-size: 11vh;
+    font-size: 7vw;
+    
 }
