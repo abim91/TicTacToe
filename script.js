@@ -2,21 +2,9 @@ let gameBoard = [{value: 0, available: true}, {value: 1,available: true}, {value
              {value: 3,  available: true},{value: 4, available: true},{value: 5, available: true},
              {value: 6,  available: true},{value: 7, available: true},{value: 8, available: true}];
 
-/*let gameBoard = [{value: "", available: true}, {value: "",available: true}, {value: "", available: true},
-                {value: "",  available: true},{value: "", available: true},{value: "", available: true},
-                {value: "",  available: true},{value: "", available: true},{value: "", available: true}];*/
 
-function displayGrid(){
-    let output = "";
-    for(let i = 0; i < gameBoard.length; i++){
-        if(i%3 === 0){
-            output += "\n \n";
-        }
-        output += (" "+ gameBoard[i].value);
-    }
-    console.log(output);
-};
 
+const dialog = document.querySelector("dialog");
 
 function player(type){
     let choice = "";
@@ -26,28 +14,6 @@ function player(type){
 
 let p1 = player("X");
 let p2 = player("O");
-
-function askUser(currentPlayer){
-// add feature to highlight button each turn, the point is to make the program wait so 
-
-
-    const answer = parseInt(prompt(currentPlayer.type+ " - player's turn"),10);
-    
-    if(gameBoard[answer].available  ){
-        console.log("here for answer ", answer);
-        gameBoard[answer].value = currentPlayer.type;
-        gameBoard[answer].available = false;
-        displayGrid();
-    }
-    else{
-        console.log("Already Selected, Try Again");
-        console.log("the chosen is ", answer)
-        askUser(currentPlayer);
-        
-    }
-    
-   // console.log(currentPlayer.type, " choose your option");
-}
 
 function detectWinner(){
     //check horizontal for winners, check if all the horizontals are the same
@@ -84,82 +50,38 @@ function detectWinner(){
     }
     return false;
 }
-/*
-displayGrid();
-while (true){
+//detects whether the game was a draw
+function detectDraw(){
+    let availableCounter = 0;
+    let gameStatus = true;
+    for(let i = 0; i < gameBoard.length; i++){
+        if(gameBoard[i].available){//if there is emply slots then the game isn't over.
+            availableCounter++;
+        }
+    }
+
+    if(availableCounter == 0){
+        gameStatus = false;
+    }
     
-    askUser(p1);
-    if(detectWinner()){
-        console.log("Player", p1.type ,"is the winner!!");
-        break;
+    if(!gameStatus && !detectWinner()){
+        return true;
     }
-
-    
-   
-    askUser(p2);
-    if(detectWinner()){
-        console.log("Player ", p2.type ," is the winner!!");
-        break;
-    }
-
-}*/
- 
-
-
-
-/*for(let i = 0; i < eachSlot.length ; i++){
-    const slot = document.getElementById(`slot-${eachSlot[i]}`);
-    slot.addEventListener("click",(e)=>{
-        console.log("You clicked " , slot.innerText);
-    });
-}*/
-
-let eachSlot = ["zero","one","two","three","four","five","six","seven","eight"];
-/*function updateGrid(){
-    for(let i = 0; i < eachSlot.length ; i++){
-        const slot = document.getElementById(`slot-${eachSlot[i]}`);
-        slot.innerText = gameBoard[i].value; 
-    }
-};*/
-
-//updateGrid();
-/*function end(){
-    for(let i = 0; i < eachSlot.length ; i++){
-        const clickedCell = document.getElementById(`slot-${eachSlot[i]}`);
-        clickedCell.removeEventListener("click",eventHandler());
-    }
-}*/
-function eventHandler(i, clickedCell){
-    if(gameBoard[i].available){ 
-        currentlySelected = clickedCell;
-        currentlySelected.innerText = currentPlayer.type;
         
-        gameBoard[i].available = false;
-        gameBoard[i].value = currentPlayer.type; //updates the gameboard array
-      
-        if(detectWinner()){
-            console.log(gameBoard);
-            console.log(currentPlayer.type, " is the winner. yessir");
-            end();
-            
-        }
-        else{
-            currentPlayer = (currentPlayer === p1)? p2: p1;
-            play(currentPlayer);
-        }
-    }
-    
+    return false;
 }
 function play(cP){
     currentPlayer = cP;
     let currentlySelected;
-    
+    let eachSlot = ["zero","one","two","three","four","five","six","seven","eight"];
     
     for(let i = 0; i < eachSlot.length ; i++){
         
         const clickedCell = document.getElementById(`slot-${eachSlot[i]}`);
         clickedCell.addEventListener("click",(e)=>{
+
             document.getElementById("playerTracker").hidden = true;
+
             if(gameBoard[i].available){ 
             currentlySelected = clickedCell;
             currentlySelected.innerText = currentPlayer.type;
@@ -167,10 +89,17 @@ function play(cP){
             gameBoard[i].available = false;
             gameBoard[i].value = currentPlayer.type; //updates the gameboard array
           
+
+            if(detectDraw()){
+                dialog.showModal();
+                dialog.style.display = "flex";
+                document.getElementById("winnerDisplay").innerText = "The game was a draw";
+            }
             if(detectWinner()){
-                console.log(gameBoard);
-                console.log(currentPlayer.type, " is the winner. yessir");
-                document.getElementById("winnerDisplay").innerText = `PLAYER ${currentPlayer.type} IS THE WINNER`
+                
+                dialog.showModal();
+                dialog.style.display = "flex";
+                document.getElementById("winnerDisplay").innerText = `PLAYER ${currentPlayer.type} IS THE WINNER`;
                 
                 
             }
@@ -188,10 +117,21 @@ function play(cP){
     
 }
 
+function restart(){
+    console.log("went into restart");
+    dialog.style.display = "none";
+    for(let i = 0; i < gameBoard.length; i++){
+        gameBoard[i].available = true;
+        gameBoard[i].value = i; 
+    }
+    play(p1);
+
+}
 
 function runner(){
     play(p1);
-    return;
-   
-    }
+    const restart = document.getElementById("playAgainBTN");
+    restart.addEventListener("click", restart);
+    
+}
 runner();

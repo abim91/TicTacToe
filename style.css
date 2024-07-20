@@ -48,12 +48,24 @@ body{
     
     
 }
-.playerTracker{
-  /*  border-style: solid;
-    border-color: orange;
-    
-    text-align: center;*/
 
+
+
+dialog{
+   /* display: none;*/
+   
+    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 25vw;
+    height: 20vh;
+
+}
+#playAgainBTN{
+    text-decoration: none;
+    width: fit-content;
 }
 .gameBoard{
     
