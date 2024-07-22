@@ -119,19 +119,29 @@ function play(cP){
 
 function restart(){
     console.log("went into restart");
+    dialog.close();
     dialog.style.display = "none";
+    const grid = document.getElementsByClassName("slot");// returns list of children with gameBoard class<li>
+    console.log(grid);
     for(let i = 0; i < gameBoard.length; i++){
         gameBoard[i].available = true;
         gameBoard[i].value = i; 
+        grid[i].innerHTML = "";//refers to the html li code
     }
+    document.getElementById("playerTracker").hidden = false;
+
+    
+    
     play(p1);
 
 }
 
 function runner(){
     play(p1);
-    const restart = document.getElementById("playAgainBTN");
-    restart.addEventListener("click", restart);
+    const restartBtn = document.getElementById("playAgainBTN");// THis element doesn't exist intially 
+    if(restartBtn){// check once restart element exists then add eventlistener
+        restartBtn.addEventListener("click", restart);
+    }
     
 }
 runner();
