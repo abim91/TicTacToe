@@ -1,13 +1,20 @@
+
 html,body{
+
     margin: 0px;
     height: 100%; 
+    
 }
+.lin_grad {
+   
+    background-image: linear-gradient(to right,#508f1d, #DAF7A6,teal);
+}
+
 body{
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: "Roboto Slab",'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: grid;
     grid-template: 1fr 5fr/ 1fr;
- /*   border-style: solid;
-    border-color: red;*/
+ 
     min-width: 700px;
 
     
