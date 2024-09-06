@@ -5,7 +5,7 @@ let gameBoard = [{value: 0, available: true}, {value: 1,available: true}, {value
 
 
 const dialog = document.querySelector("dialog");
-
+var turn = 1;
 function player(type){
     let choice = "";
     const getSelectedSlot = () => choice;
@@ -20,7 +20,7 @@ function detectWinner(){
     for(let i = 0; i < 9; i+=3){
         
         if(gameBoard[i].value === gameBoard[i+1].value && gameBoard[i+1].value === gameBoard[i+2].value){
-            console.log("horizontal win");
+           // console.log("horizontal win");
             return true;
         }
     }
@@ -28,7 +28,7 @@ function detectWinner(){
     for(let i = 0; i < 3; i++){
         
         if(gameBoard[i].value === gameBoard[i+3].value && gameBoard[i+3].value === gameBoard[i+6].value){
-            console.log("vertical win");
+           // console.log("vertical win");
             return true;
         }
     }
@@ -36,7 +36,7 @@ function detectWinner(){
     for(let i = 0; i < 1; i++){
         
         if(gameBoard[i].value === gameBoard[i+4].value && gameBoard[i+4].value === gameBoard[i+8].value){
-            console.log("diagonal win");
+          //  console.log("diagonal win");
             return true;
         }
     }
@@ -74,14 +74,27 @@ function play(cP){
     currentPlayer = cP;
     let currentlySelected;
     let eachSlot = ["zero","one","two","three","four","five","six","seven","eight"];
-    
+
+    var player1 = document.getElementById("player-1");
+    var player2 = document.getElementById("player-2");
+    if (turn === 1){
+        player1.style.backgroundColor = "green";
+        player2.style.backgroundColor = "";
+    }
+    if (turn === 2){
+        player2.style.backgroundColor = "green";
+        player1.style.backgroundColor = "";
+    }
+    turn = turn === 1? 2: 1;
+
     for(let i = 0; i < eachSlot.length ; i++){
         
         const clickedCell = document.getElementById(`slot-${eachSlot[i]}`);
         clickedCell.addEventListener("click",(e)=>{
 
             document.getElementById("playerTracker").hidden = true;
-
+            
+        
             if(gameBoard[i].available){ 
             currentlySelected = clickedCell;
             currentlySelected.innerText = currentPlayer.type;
@@ -118,11 +131,11 @@ function play(cP){
 }
 
 function restart(){
-    console.log("went into restart");
+    
     dialog.close();
     dialog.style.display = "none";
     const grid = document.getElementsByClassName("slot");// returns list of children with gameBoard class<li>
-    console.log(grid);
+    
     for(let i = 0; i < gameBoard.length; i++){
         gameBoard[i].available = true;
         gameBoard[i].value = i; 

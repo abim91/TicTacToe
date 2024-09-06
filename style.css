@@ -112,3 +112,17 @@ ul li{
     font-size: 7vw;
     
 }
+
+
+/*player status*/
+.playerStatus{
+    display: flex;
+}
+#player-1{
+    padding: 10px;
+    margin-right: 10px;
+    
+}
+#player-2{
+    padding: 10px;
+}
